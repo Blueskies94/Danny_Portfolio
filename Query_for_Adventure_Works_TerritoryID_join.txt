@@ -1,4 +1,1 @@
-select a.name, a.countryregioncode, a.[Group], a.salesytd, a.costytd, b.stateprovinceid, b.isonlystateprovinceflag, b.territoryid
-from sales.salesterritory as a
-left join person.stateprovince as b
-on a.TerritoryID = b.TerritoryID
+
