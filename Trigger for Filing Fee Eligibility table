@@ -1,0 +1,28 @@
+CREATE TRIGGER [dbo].[Filing_Fee_Eligibility] // When somebody inputs a new candidate's first name, last name, and their signatures collected, it returns
+   ON  [dbo].[TFiled_for_office]              // a result in the TMustPayFee table with one of two statements, according to whether or not signatures is less than 500.
+   AFTER INSERT
+AS 
+BEGIN
+	declare @signatures int;
+	declare @First_Name varchar(20);
+	declare @Last_Name varchar(20);
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+
+    -- Insert statements for trigger here
+	SELECT @signatures = Signatures from inserted
+	SELECT @First_Name = First_Name from inserted
+	SELECT @Last_Name = Last_Name from inserted
+
+
+	if @signatures < '500' begin
+	insert into TMustPayFee (First_Name, Last_Name, Signatures, FeeStatus) 
+	values (@First_Name, @Last_Name, @signatures, 'Candidate must pay filing fee of $2000')
+	end
+
+	else if @signatures > '500' begin
+	insert into TMustPayFee (First_Name, Last_Name, Signatures, FeeStatus) 
+	values (@First_Name, @Last_Name, @signatures, 'Candidate eligible to bypass filing fee')
+	end
+	
+END	
