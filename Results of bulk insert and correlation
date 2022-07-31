@@ -1,0 +1,14 @@
+SELECT [geoid]
+      ,[county]
+      ,[st]
+      ,[pct_travel_60_min]
+      ,[pct_bachelors_higher]
+      ,[pct_masters_higher]
+      ,[median_hh_income]
+  FROM [Interest_analysis].[dbo].[acs_2011_2015_statistics_income_education]
+
+SELECT
+(Avg(pct_bachelors_higher * median_hh_income) - (Avg(pct_bachelors_higher) * Avg(median_hh_income))) / 
+(StDevP(pct_bachelors_higher) * StDevP(median_hh_income)) as Correlation
+from [acs_2011_2015_statistics_income_education] --Measuring the correlation
+												 --and education
