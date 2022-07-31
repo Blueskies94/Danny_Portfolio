@@ -1,3 +1,13 @@
+bulk insert acs_2011_2015_statistics_income_education
+FROM 'c:\Political_analysis_SQL\Acs_2011_2015_statistics_income_education.csv'
+WITH
+(	
+	FIRSTROW = 2,
+	FIELDTERMINATOR = ',',
+	ROWTERMINATOR = '\n',
+	TABLOCK
+)
+-------------------------------------------------------------------------------------------------------
 SELECT [geoid]
       ,[county]
       ,[st]
@@ -6,9 +16,8 @@ SELECT [geoid]
       ,[pct_masters_higher]
       ,[median_hh_income]
   FROM [Interest_analysis].[dbo].[acs_2011_2015_statistics_income_education]
-
+---------------------------------------------------------------------------------------------------------
 SELECT
 (Avg(pct_bachelors_higher * median_hh_income) - (Avg(pct_bachelors_higher) * Avg(median_hh_income))) / 
 (StDevP(pct_bachelors_higher) * StDevP(median_hh_income)) as Correlation
-from [acs_2011_2015_statistics_income_education] --Measuring the correlation
-												 --and education
+from [acs_2011_2015_statistics_income_education] 					
